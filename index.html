@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CommScout - Find the Right IT & Telecom Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS Reset & Variables ===== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #1e3a5f;
+            --secondary: #0d7377;
+            --accent: #f97316;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --white: #ffffff;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-400: #94a3b8;
+            --gray-600: #475569;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--white);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ===== Utility Classes ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #ea580c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .section-title {
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--gray-600);
+            max-width: 600px;
+        }
+
+        /* ===== Header/Navigation ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--gray-600);
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-cta {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            padding: 160px 24px 100px;
+            background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%);
+        }
+
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--primary);
+            margin-bottom: 24px;
+        }
+
+        .hero-content h1 span {
+            color: var(--secondary);
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            color: var(--gray-600);
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+        }
+
+        .stat {
+            text-align: left;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .hero-visual {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 24px;
+            height: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-visual::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+        }
+
+        .hero-visual::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            bottom: -50px;
+            left: -50px;
+        }
+
+        .hero-visual-content {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .hero-visual-content .icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        /* ===== Trusted By Section ===== */
+        .trusted-by {
+            padding: 60px 24px;
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .trusted-by p {
+            text-align: center;
+            color: var(--gray-400);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+        }
+
+        .logo-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .logo-placeholder {
+            width: 120px;
+            height: 40px;
+            background: var(--gray-200);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-400);
+            font-size: 12px;
+        }
+
+        /* ===== Services Section ===== */
+        .services {
+            padding: 100px 24px;
+            background: var(--white);
+        }
+
+        .services .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .services .section-subtitle {
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .service-card {
+            background: var(--light);
+            padding: 40px 32px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: var(--secondary);
+        }
+
+        .service-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 24px;
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+
+        /* ===== How It Works Section ===== */
+        .how-it-works {
+            padding: 100px 24px;
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .how-it-works .section-title {
+            color: var(--white);
+            text-align: center;
+        }
+
+        .how-it-works .section-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin: 0 auto 60px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step::after {
+            content: '';
+            position: absolute;
+            top: 40px;
+            right: -16px;
+            width: calc(100% - 80px);
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            margin: 0 auto 24px;
+        }
+
+        .step h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .step p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+        }
+
+        /* ===== Benefits Section ===== */
+        .benefits {
+            padding: 100px 24px;
+            background: var(--light);
+        }
+
+        .benefits .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .benefits-content .section-title {
+            margin-bottom: 24px;
+        }
+
+        .benefits-list {
+            list-style: none;
+            margin-top: 32px;
+        }
+
+        .benefits-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .benefit-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--white);
+            font-size: 16px;
+        }
+
+        .benefit-text h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .benefit-text p {
+            color: var(--gray-600);
+            font-size: 15px;
+        }
+
+        .benefits-visual {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .quote {
+            font-size: 24px;
+            font-style: italic;
+            color: var(--primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .quote-author {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .author-avatar {
+            width: 56px;
+            height: 56px;
+            background: var(--gray-200);
+            border-radius: 50%;
+        }
+
+        .author-info h5 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .author-info p {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        /* ===== CTA Section ===== */
+        .cta {
+            padding: 100px 24px;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            text-align: center;
+            color: var(--white);
+        }
+
+        .cta h2 {
+            font-size: 44px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 20px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta .btn-primary {
+            background: var(--white);
+            color: var(--primary);
+            padding: 18px 48px;
+            font-size: 18px;
+        }
+
+        .cta .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 80px 24px 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .footer-brand p {
+            color: var(--gray-400);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--white);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: var(--gray-400);
+            transition: color 0.2s;
+        }
+
+        .footer-column a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            color: var(--gray-400);
+            font-size: 14px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .social-link:hover {
+            background: var(--secondary);
+        }
+
+        /* ===== Responsive Design ===== */
+        @media (max-width: 1024px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 42px;
+            }
+
+            .hero-cta {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                height: 300px;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .steps {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 48px;
+            }
+
+            .step::after {
+                display: none;
+            }
+
+            .benefits .container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .cta h2 {
+                font-size: 32px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo">Comm<span>Scout</span></a>
+            <ul class="nav-links">
+                <li><a href="#services">Solutions</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#benefits">Why Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-cta">
+                <a href="#" class="btn btn-secondary">Sign In</a>
+                <a href="#" class="btn btn-primary">Get Started</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Find the Right <span>IT & Telecom</span> Solutions for Your Business</h1>
+                <p>CommScout connects you with pre-vetted technology vendors matched to your specific needs. Save time, reduce costs, and make confident technology decisions.</p>
+                <div class="hero-cta">
+                    <a href="#" class="btn btn-primary">Get Matched Free</a>
+                    <a href="#" class="btn btn-secondary">See How It Works</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Vetted Vendors</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">$2.4M</div>
+                        <div class="stat-label">Client Savings</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Satisfaction Rate</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-visual-content">
+                    <div class="icon">&#128640;</div>
+                    <p>Hero Image / Illustration<br>Placeholder</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trusted By -->
+    <section class="trusted-by">
+        <div class="container">
+            <p>Trusted by growing companies</p>
+            <div class="logo-grid">
+                <div class="logo-placeholder">Logo 1</div>
+                <div class="logo-placeholder">Logo 2</div>
+                <div class="logo-placeholder">Logo 3</div>
+                <div class="logo-placeholder">Logo 4</div>
+                <div class="logo-placeholder">Logo 5</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Solutions We Source</h2>
+                <p class="section-subtitle">From unified communications to cloud infrastructure, we help you find the right technology partners.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">&#128222;</div>
+                    <h3>Unified Communications</h3>
+                    <p>VoIP, UCaaS, video conferencing, and collaboration tools to keep your team connected.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">&#9729;</div>
+                    <h3>Cloud Services</h3>
+                    <p>Public, private, and hybrid cloud solutions tailored to your infrastructure needs.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">&#128274;</div>
+                    <h3>Cybersecurity</h3>
+                    <p>Protect your business with managed security services, SIEM, and compliance solutions.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">&#127760;</div>
+                    <h3>Network & Connectivity</h3>
+                    <p>SD-WAN, MPLS, dedicated internet, and wireless solutions for reliable connectivity.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">&#128187;</div>
+                    <h3>Managed IT</h3>
+                    <p>Outsourced IT support, help desk, and infrastructure management services.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">&#128200;</div>
+                    <h3>Contact Center</h3>
+                    <p>CCaaS platforms and customer experience solutions to elevate your support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How CommScout Works</h2>
+            <p class="section-subtitle">Our proven process saves you time and ensures you find the perfect technology fit.</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Tell Us Your Needs</h3>
+                    <p>Share your requirements, challenges, and goals with our technology advisors.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>We Scout Solutions</h3>
+                    <p>Our team researches and shortlists vendors that match your specific criteria.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Compare & Evaluate</h3>
+                    <p>Review proposals, pricing, and capabilities with our expert guidance.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Implement & Succeed</h3>
+                    <p>We support you through implementation and ensure a smooth transition.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits" id="benefits">
+        <div class="container">
+            <div class="benefits-content">
+                <h2 class="section-title">Why Companies Choose CommScout</h2>
+                <p class="section-subtitle">We're not just a referral service. We're your technology sourcing partner.</p>
+                <ul class="benefits-list">
+                    <li>
+                        <div class="benefit-icon">&#10003;</div>
+                        <div class="benefit-text">
+                            <h4>No Cost to You</h4>
+                            <p>Our services are completely free. Vendors pay us, not you.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="benefit-icon">&#10003;</div>
+                        <div class="benefit-text">
+                            <h4>Unbiased Recommendations</h4>
+                            <p>We work with 500+ vendors, so we recommend what's right for you.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="benefit-icon">&#10003;</div>
+                        <div class="benefit-text">
+                            <h4>Expert Negotiation</h4>
+                            <p>Leverage our market knowledge to get better pricing and terms.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="benefit-icon">&#10003;</div>
+                        <div class="benefit-text">
+                            <h4>Ongoing Support</h4>
+                            <p>We stay with you through implementation and beyond.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="benefits-visual">
+                <p class="quote">"CommScout saved us 40% on our telecom costs and found us a solution we didn't even know existed. Invaluable partner."</p>
+                <div class="quote-author">
+                    <div class="author-avatar"></div>
+                    <div class="author-info">
+                        <h5>Sarah Mitchell</h5>
+                        <p>IT Director, Acme Manufacturing</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2>Ready to Find Your Perfect Technology Partner?</h2>
+            <p>Get matched with pre-vetted vendors in minutes. No cost, no obligation.</p>
+            <a href="#" class="btn btn-primary">Start Your Free Consultation</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">Comm<span>Scout</span></a>
+                    <p>Connecting businesses with the right IT and telecom solutions since 2024. Your trusted technology sourcing partner.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Solutions</h4>
+                    <ul>
+                        <li><a href="#">Unified Communications</a></li>
+                        <li><a href="#">Cloud Services</a></li>
+                        <li><a href="#">Cybersecurity</a></li>
+                        <li><a href="#">Network & Connectivity</a></li>
+                        <li><a href="#">Managed IT</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Partner With Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Vendor Directory</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CommScout. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">in</a>
+                    <a href="#" class="social-link">X</a>
+                    <a href="#" class="social-link">f</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

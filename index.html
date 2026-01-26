@@ -167,27 +167,27 @@
 
         /* ===== Hero Section ===== */
         .hero {
-            padding: 140px 24px 80px;
+            padding: 120px 24px 70px;
             background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%);
         }
 
         .hero .container {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
             align-items: center;
-            text-align: center;
         }
 
         .hero-content {
-            max-width: 720px;
+            max-width: 540px;
         }
 
         .hero-content h1 {
-            font-size: 48px;
+            font-size: 42px;
             font-weight: 800;
             line-height: 1.15;
             color: var(--primary);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .hero-content h1 span {
@@ -195,108 +195,97 @@
         }
 
         .hero-content p {
-            font-size: 18px;
+            font-size: 17px;
             color: var(--gray-600);
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             line-height: 1.7;
         }
 
         .hero-cta {
             display: flex;
             gap: 16px;
-            margin-bottom: 40px;
-            justify-content: center;
+            margin-bottom: 32px;
         }
 
         .hero-stats {
             display: flex;
-            gap: 56px;
-            justify-content: center;
+            gap: 40px;
         }
 
         .stat {
-            text-align: center;
+            text-align: left;
         }
 
         .stat-number {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
             color: var(--primary);
         }
 
         .stat-label {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--gray-600);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        /* ===== Services Section ===== */
-        .services {
-            padding: 70px 24px;
-            background: var(--white);
+        .hero-services {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .services .section-header {
-            text-align: center;
-            margin-bottom: 48px;
+        .hero-services-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
         }
 
-        .services .section-title {
-            font-size: 32px;
-        }
-
-        .services .section-subtitle {
-            margin: 0 auto;
-            font-size: 16px;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
+        /* ===== Service Cards ===== */
         .service-card {
-            background: var(--light);
-            padding: 32px 28px;
+            background: var(--white);
+            padding: 28px 24px;
             border-radius: 12px;
             transition: all 0.3s ease;
             border: 1px solid var(--gray-200);
-            text-align: center;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         .service-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
             border-color: var(--secondary);
         }
 
         .service-icon {
-            width: 56px;
-            height: 56px;
+            width: 52px;
+            height: 52px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            margin: 0 auto 20px;
+            font-size: 22px;
+            flex-shrink: 0;
         }
 
         .service-card h3 {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 10px;
+            margin-bottom: 6px;
         }
 
         .service-card p {
             color: var(--gray-600);
-            line-height: 1.6;
-            font-size: 15px;
+            line-height: 1.5;
+            font-size: 14px;
         }
 
         /* ===== How It Works Section ===== */
@@ -597,8 +586,28 @@
 
         /* ===== Responsive Design ===== */
         @media (max-width: 1024px) {
-            .hero-content h1 {
-                font-size: 40px;
+            .hero .container {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .hero-content {
+                max-width: 600px;
+                text-align: center;
+                margin: 0 auto;
+            }
+
+            .hero-cta {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-services {
+                max-width: 500px;
+                margin: 0 auto;
             }
 
             .steps {
@@ -626,7 +635,7 @@
             }
 
             .hero {
-                padding: 120px 24px 60px;
+                padding: 110px 24px 50px;
             }
 
             .hero-content h1 {
@@ -634,16 +643,22 @@
             }
 
             .hero-stats {
-                gap: 32px;
+                gap: 24px;
+                flex-wrap: wrap;
             }
 
             .stat-number {
-                font-size: 28px;
+                font-size: 24px;
             }
 
-            .services-grid {
-                grid-template-columns: 1fr;
-                max-width: 400px;
+            .service-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 16px;
+            }
+
+            .service-icon {
+                margin: 0 auto;
             }
 
             .steps {
@@ -673,7 +688,7 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="version">v1.3</div>
+        <div class="version">v1.4</div>
         <nav>
             <a href="#" class="logo">Comm<span>Scout</span></a>
             <ul class="nav-links">
@@ -689,7 +704,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="services">
         <div class="container">
             <div class="hero-content">
                 <h1>Find the Right <span>IT & Telecom</span> Solutions for Your Business</h1>
@@ -713,18 +728,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Solutions We Source</h2>
-                <p class="section-subtitle">We help you find the right technology partners for your communication needs.</p>
-            </div>
-            <div class="services-grid">
+            <div class="hero-services">
+                <p class="hero-services-title">Solutions We Source</p>
                 <div class="service-card">
                     <div class="service-icon">&#128222;</div>
                     <h3>Unified Communications</h3>

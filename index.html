@@ -110,9 +110,9 @@
             top: 0;
             left: 0;
             right: 0;
-            background: var(--white);
+            background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%);
             z-index: 1000;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: none;
         }
 
         nav {
@@ -163,10 +163,14 @@
         }
 
         .hero .container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
         }
 
         .hero-content h1 {
@@ -197,10 +201,11 @@
         .hero-stats {
             display: flex;
             gap: 48px;
+            justify-content: center;
         }
 
         .stat {
-            text-align: left;
+            text-align: center;
         }
 
         .stat-number {
@@ -312,8 +317,10 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 32px;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .service-card {
@@ -633,29 +640,12 @@
 
         /* ===== Responsive Design ===== */
         @media (max-width: 1024px) {
-            .hero .container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
             .hero-content h1 {
                 font-size: 42px;
             }
 
-            .hero-cta {
-                justify-content: center;
-            }
-
-            .hero-stats {
-                justify-content: center;
-            }
-
-            .hero-visual {
-                height: 300px;
-            }
-
             .services-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
             }
 
             .steps {
@@ -726,7 +716,6 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="nav-cta">
-                <a href="#" class="btn btn-secondary">Sign In</a>
                 <a href="#" class="btn btn-primary">Get Started</a>
             </div>
         </nav>
@@ -757,61 +746,22 @@
                     </div>
                 </div>
             </div>
-            <div class="hero-visual">
-                <div class="hero-visual-content">
-                    <div class="icon">&#128640;</div>
-                    <p>Hero Image / Illustration<br>Placeholder</p>
-                </div>
-            </div>
         </div>
     </section>
 
-    <!-- Trusted By -->
-    <section class="trusted-by">
-        <div class="container">
-            <p>Trusted by growing companies</p>
-            <div class="logo-grid">
-                <div class="logo-placeholder">Logo 1</div>
-                <div class="logo-placeholder">Logo 2</div>
-                <div class="logo-placeholder">Logo 3</div>
-                <div class="logo-placeholder">Logo 4</div>
-                <div class="logo-placeholder">Logo 5</div>
-            </div>
-        </div>
-    </section>
 
     <!-- Services Section -->
     <section class="services" id="services">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Solutions We Source</h2>
-                <p class="section-subtitle">From unified communications to cloud infrastructure, we help you find the right technology partners.</p>
+                <p class="section-subtitle">We help you find the right technology partners for your communication needs.</p>
             </div>
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">&#128222;</div>
                     <h3>Unified Communications</h3>
                     <p>VoIP, UCaaS, video conferencing, and collaboration tools to keep your team connected.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">&#9729;</div>
-                    <h3>Cloud Services</h3>
-                    <p>Public, private, and hybrid cloud solutions tailored to your infrastructure needs.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">&#128274;</div>
-                    <h3>Cybersecurity</h3>
-                    <p>Protect your business with managed security services, SIEM, and compliance solutions.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">&#127760;</div>
-                    <h3>Network & Connectivity</h3>
-                    <p>SD-WAN, MPLS, dedicated internet, and wireless solutions for reliable connectivity.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">&#128187;</div>
-                    <h3>Managed IT</h3>
-                    <p>Outsourced IT support, help desk, and infrastructure management services.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">&#128200;</div>
@@ -923,10 +873,7 @@
                     <h4>Solutions</h4>
                     <ul>
                         <li><a href="#">Unified Communications</a></li>
-                        <li><a href="#">Cloud Services</a></li>
-                        <li><a href="#">Cybersecurity</a></li>
-                        <li><a href="#">Network & Connectivity</a></li>
-                        <li><a href="#">Managed IT</a></li>
+                        <li><a href="#">Contact Center</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">

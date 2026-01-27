@@ -1,0 +1,10 @@
+{
+  "urls": [
+    "https://example.com/page1",
+    "https://example.com/page2"
+  ],
+  "selector": "h2",
+  "mode": "text",
+  "delay": 1.5,
+  "timeout": 30
+}

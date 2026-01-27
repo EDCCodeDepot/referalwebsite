@@ -1,0 +1,14 @@
+{
+  "metadata": {
+    "source": "https://www.gds.org",
+    "crawled_at": "2026-01-27T14:50:06.436210",
+    "total_failed": 1
+  },
+  "failed_pages": [
+    {
+      "url": "https://www.gds.org",
+      "reason": "max_retries_exceeded",
+      "timestamp": "2026-01-27T14:50:03.688358"
+    }
+  ]
+}

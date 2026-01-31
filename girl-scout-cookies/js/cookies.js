@@ -14,7 +14,7 @@ const COOKIES = [
         isNew: false,
         color: '#2d5a3d',
         emoji: '🍫',
-        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Thin-Mints.png'
+        image: 'images/thin-mints.png'
     },
     {
         id: 'samoas',
@@ -26,7 +26,7 @@ const COOKIES = [
         isNew: false,
         color: '#8b5a2b',
         emoji: '🥥',
-        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Samoas.png'
+        image: 'images/samoas.png'
     },
     {
         id: 'tagalongs',
@@ -38,7 +38,7 @@ const COOKIES = [
         isNew: false,
         color: '#5c4033',
         emoji: '🥜',
-        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Tagalongs.png'
+        image: 'images/tagalongs.png'
     },
     {
         id: 'do-si-dos',
@@ -50,7 +50,7 @@ const COOKIES = [
         isNew: false,
         color: '#c4a35a',
         emoji: '🥪',
-        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Do-si-dos.png'
+        image: 'images/do-si-dos.png'
     },
     {
         id: 'trefoils',
@@ -62,7 +62,7 @@ const COOKIES = [
         isNew: false,
         color: '#e6d5a8',
         emoji: '🍪',
-        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Trefoils.png'
+        image: 'images/trefoils.png'
     },
     {
         id: 'lemonades',
@@ -74,7 +74,7 @@ const COOKIES = [
         isNew: false,
         color: '#fff44f',
         emoji: '🍋',
-        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Lemonades.png'
+        image: 'images/lemonades.png'
     },
     {
         id: 'lemon-ups',
@@ -86,7 +86,7 @@ const COOKIES = [
         isNew: false,
         color: '#ffd700',
         emoji: '✨',
-        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Lemon-Ups.png'
+        image: 'images/lemon-ups.png'
     },
     {
         id: 'adventurefuls',
@@ -98,7 +98,7 @@ const COOKIES = [
         isNew: false,
         color: '#4a3728',
         emoji: '🏔️',
-        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Adventurefuls.png'
+        image: 'images/adventurefuls.png'
     },
     {
         id: 'toffee-tastic',
@@ -110,7 +110,7 @@ const COOKIES = [
         isNew: false,
         color: '#d4a574',
         emoji: '🧈',
-        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Toffee-tastic.png'
+        image: 'images/toffee-tastic.png'
     },
     {
         id: 'caramel-chocolate-chip',
@@ -122,7 +122,7 @@ const COOKIES = [
         isNew: false,
         color: '#8b6914',
         emoji: '🍯',
-        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Caramel-Chocolate-Chip.png'
+        image: 'images/caramel-chocolate-chip.png'
     },
     {
         id: 'smores',
@@ -134,7 +134,7 @@ const COOKIES = [
         isNew: true,
         color: '#6b4423',
         emoji: '🏕️',
-        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Smores.png'
+        image: 'images/smores.png'
     }
 ];
 

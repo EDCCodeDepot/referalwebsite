@@ -13,7 +13,8 @@ const COOKIES = [
         glutenFree: false,
         isNew: false,
         color: '#2d5a3d',
-        emoji: '🍫'
+        emoji: '🍫',
+        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Thin-Mints.png'
     },
     {
         id: 'samoas',
@@ -24,7 +25,8 @@ const COOKIES = [
         glutenFree: false,
         isNew: false,
         color: '#8b5a2b',
-        emoji: '🥥'
+        emoji: '🥥',
+        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Samoas.png'
     },
     {
         id: 'tagalongs',
@@ -35,7 +37,8 @@ const COOKIES = [
         glutenFree: false,
         isNew: false,
         color: '#5c4033',
-        emoji: '🥜'
+        emoji: '🥜',
+        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Tagalongs.png'
     },
     {
         id: 'do-si-dos',
@@ -46,7 +49,8 @@ const COOKIES = [
         glutenFree: false,
         isNew: false,
         color: '#c4a35a',
-        emoji: '🥪'
+        emoji: '🥪',
+        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Do-si-dos.png'
     },
     {
         id: 'trefoils',
@@ -57,7 +61,8 @@ const COOKIES = [
         glutenFree: false,
         isNew: false,
         color: '#e6d5a8',
-        emoji: '🍪'
+        emoji: '🍪',
+        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Trefoils.png'
     },
     {
         id: 'lemonades',
@@ -68,7 +73,8 @@ const COOKIES = [
         glutenFree: false,
         isNew: false,
         color: '#fff44f',
-        emoji: '🍋'
+        emoji: '🍋',
+        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Lemonades.png'
     },
     {
         id: 'lemon-ups',
@@ -79,7 +85,8 @@ const COOKIES = [
         glutenFree: false,
         isNew: false,
         color: '#ffd700',
-        emoji: '✨'
+        emoji: '✨',
+        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Lemon-Ups.png'
     },
     {
         id: 'adventurefuls',
@@ -90,7 +97,8 @@ const COOKIES = [
         glutenFree: false,
         isNew: false,
         color: '#4a3728',
-        emoji: '🏔️'
+        emoji: '🏔️',
+        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Adventurefuls.png'
     },
     {
         id: 'toffee-tastic',
@@ -101,7 +109,8 @@ const COOKIES = [
         glutenFree: true,
         isNew: false,
         color: '#d4a574',
-        emoji: '🧈'
+        emoji: '🧈',
+        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Toffee-tastic.png'
     },
     {
         id: 'caramel-chocolate-chip',
@@ -112,18 +121,20 @@ const COOKIES = [
         glutenFree: true,
         isNew: false,
         color: '#8b6914',
-        emoji: '🍯'
+        emoji: '🍯',
+        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Caramel-Chocolate-Chip.png'
     },
     {
-        id: 'exploremores',
-        name: 'Exploremores',
+        id: 'smores',
+        name: "Girl Scout S'mores",
         altName: null,
-        description: 'Sandwich cookies with chocolate, marshmallow, and almond crème',
+        description: 'Crunchy graham sandwich cookies with chocolate and marshmallow filling',
         vegan: false,
         glutenFree: false,
         isNew: true,
         color: '#6b4423',
-        emoji: '🏕️'
+        emoji: '🏕️',
+        image: 'https://www.littlebrowniebakers.com/wp-content/uploads/2023/12/Smores.png'
     }
 ];
 
@@ -162,6 +173,23 @@ function getGlutenFreeCookies() {
  */
 function getNewCookies() {
     return COOKIES.filter(cookie => cookie.isNew);
+}
+
+/**
+ * Render a cookie image with fallback to emoji placeholder
+ * @param {Object} cookie - The cookie object
+ * @param {boolean} small - Whether to render a small version
+ * @returns {string} - HTML string for the image
+ */
+function renderCookieImage(cookie, small = false) {
+    if (cookie.image) {
+        return `<img src="${cookie.image}"
+                     alt="${cookie.name}"
+                     loading="lazy"
+                     onerror="this.parentElement.innerHTML='<span class=\\'cookie-emoji\\'>${cookie.emoji}</span>'"
+                     class="cookie-img ${small ? 'cookie-img-small' : ''}">`;
+    }
+    return `<span class="cookie-emoji">${cookie.emoji}</span>`;
 }
 
 // Freeze the cookies array to prevent accidental modifications

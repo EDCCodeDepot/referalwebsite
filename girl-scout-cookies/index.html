@@ -143,9 +143,18 @@
 
             card.innerHTML = `
                 <div class="cookie-image">
-                    <div class="cookie-placeholder" style="background-color: ${cookie.color}">
-                        <span class="cookie-emoji">${cookie.emoji}</span>
-                    </div>
+                    ${cookie.image
+                        ? `<img src="${cookie.image}"
+                               alt="${cookie.name}"
+                               loading="lazy"
+                               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                           <div class="cookie-placeholder" style="background-color: ${cookie.color}; display: none;">
+                               <span class="cookie-emoji">${cookie.emoji}</span>
+                           </div>`
+                        : `<div class="cookie-placeholder" style="background-color: ${cookie.color}">
+                               <span class="cookie-emoji">${cookie.emoji}</span>
+                           </div>`
+                    }
                     ${badges.length > 0 ? '<div class="cookie-badges">' + badges.join('') + '</div>' : ''}
                 </div>
                 <div class="cookie-info">

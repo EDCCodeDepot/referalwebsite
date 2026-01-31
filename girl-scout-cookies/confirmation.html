@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Order confirmation - Thank you for your Girl Scout Cookie order!">
+    <title>Order Confirmed! | Girl Scout Cookies</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍪</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="back-link">← Order More Cookies</a>
+                <div class="logo">
+                    <span class="logo-icon">🍪</span>
+                    <span class="logo-text">Order Confirmed</span>
+                </div>
+                <div class="header-spacer"></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="confirmation-page">
+        <div class="container">
+            <!-- No Order State -->
+            <div class="no-order" id="no-order" style="display: none;">
+                <div class="no-order-icon">🤔</div>
+                <h2>No order found</h2>
+                <p>It looks like you haven't placed an order yet.</p>
+                <a href="index.html" class="btn btn-primary">Browse Cookies</a>
+            </div>
+
+            <!-- Confirmation Content -->
+            <div class="confirmation-content" id="confirmation-content">
+                <!-- Success Message -->
+                <section class="success-section">
+                    <div class="success-icon">✓</div>
+                    <h1>Thank You!</h1>
+                    <p class="success-message">Your order has been submitted successfully.</p>
+                    <p class="order-id">Order ID: <strong id="order-id">GS-XXXXXX</strong></p>
+                </section>
+
+                <!-- Order Summary -->
+                <section class="order-summary-section">
+                    <h2>Order Summary</h2>
+                    <div class="order-details" id="order-details">
+                        <!-- Order items will be loaded here -->
+                    </div>
+                    <div class="order-total-row">
+                        <span>Total Amount Due:</span>
+                        <span class="order-total">$<span id="order-total">0</span></span>
+                    </div>
+                </section>
+
+                <!-- Customer Info -->
+                <section class="customer-info-section">
+                    <h2>Delivery Information</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Name:</label>
+                            <span id="customer-name">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Email:</label>
+                            <span id="customer-email">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Phone:</label>
+                            <span id="customer-phone">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Method:</label>
+                            <span id="delivery-method">-</span>
+                        </div>
+                        <div class="info-item" id="address-info" style="display: none;">
+                            <label>Address:</label>
+                            <span id="customer-address">-</span>
+                        </div>
+                        <div class="info-item" id="notes-info" style="display: none;">
+                            <label>Notes:</label>
+                            <span id="customer-notes">-</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Payment Section -->
+                <section class="payment-section">
+                    <h2>Complete Your Payment</h2>
+                    <div class="payment-box">
+                        <div class="venmo-info">
+                            <img src="https://cdn.worldvectorlogo.com/logos/venmo.svg" alt="Venmo" class="venmo-logo"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <span class="venmo-text-fallback" style="display: none; font-weight: bold; color: #3D95CE; font-size: 24px;">Venmo</span>
+                        </div>
+
+                        <div class="payment-details">
+                            <p class="venmo-username">Send payment to: <strong>@<span id="venmo-username">username</span></strong></p>
+                            <p class="payment-amount">Amount: <strong>$<span id="payment-amount">0</span></strong></p>
+                        </div>
+
+                        <a href="#" id="venmo-link" class="btn btn-venmo btn-large">
+                            Pay with Venmo
+                        </a>
+
+                        <div class="payment-instructions">
+                            <p><strong>Important:</strong> Please include the following in your payment note:</p>
+                            <div class="payment-note" id="payment-note">
+                                Cookie Order - [Your Name]
+                            </div>
+                            <button class="btn btn-secondary btn-small" onclick="copyPaymentNote()">
+                                Copy Note
+                            </button>
+                        </div>
+
+                        <div class="qr-code-section">
+                            <p>Or scan this QR code to pay:</p>
+                            <div class="qr-code" id="qr-code">
+                                <!-- QR code will be generated here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-reminder">
+                        <span class="reminder-icon">⏰</span>
+                        <p><strong>Payment must be received within 48 hours</strong> to confirm your order.</p>
+                    </div>
+                </section>
+
+                <!-- Print Section -->
+                <section class="actions-section">
+                    <button class="btn btn-secondary" onclick="window.print()">
+                        🖨️ Print Order
+                    </button>
+                    <a href="index.html" class="btn btn-secondary">
+                        🍪 Order More Cookies
+                    </a>
+                </section>
+
+                <!-- Contact -->
+                <section class="contact-section">
+                    <p>Questions about your order? Contact us at:</p>
+                    <a href="mailto:parent@email.com" id="contact-email" class="contact-link">parent@email.com</a>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-note">Thank you for supporting Girl Scouts!</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-message" id="toast-message">Copied!</span>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/cookies.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update config-based elements
+            document.getElementById('venmo-username').textContent = CONFIG.VENMO_USERNAME;
+            document.getElementById('contact-email').textContent = CONFIG.CONTACT_EMAIL;
+            document.getElementById('contact-email').href = 'mailto:' + CONFIG.CONTACT_EMAIL;
+
+            // Load order data
+            loadOrderData();
+        });
+
+        function loadOrderData() {
+            const orderJson = sessionStorage.getItem('lastOrder');
+            const noOrder = document.getElementById('no-order');
+            const confirmationContent = document.getElementById('confirmation-content');
+
+            if (!orderJson) {
+                noOrder.style.display = 'flex';
+                confirmationContent.style.display = 'none';
+                return;
+            }
+
+            const order = JSON.parse(orderJson);
+
+            noOrder.style.display = 'none';
+            confirmationContent.style.display = 'block';
+
+            // Populate order details
+            document.getElementById('order-id').textContent = order.orderId;
+            document.getElementById('order-total').textContent = order.total;
+            document.getElementById('payment-amount').textContent = order.total;
+
+            // Order items
+            document.getElementById('order-details').innerHTML = `
+                <div class="order-items">${order.items}</div>
+            `;
+
+            // Customer info
+            document.getElementById('customer-name').textContent = order.customerName;
+            document.getElementById('customer-email').textContent = order.email;
+            document.getElementById('customer-phone').textContent = order.phone;
+            document.getElementById('delivery-method').textContent =
+                order.deliveryMethod === 'pickup' ? 'Pickup' : 'Delivery';
+
+            if (order.deliveryMethod === 'delivery' && order.address) {
+                document.getElementById('address-info').style.display = 'flex';
+                document.getElementById('customer-address').textContent = order.address;
+            }
+
+            if (order.notes) {
+                document.getElementById('notes-info').style.display = 'flex';
+                document.getElementById('customer-notes').textContent = order.notes;
+            }
+
+            // Payment note
+            const paymentNote = `Cookie Order ${order.orderId} - ${order.customerName}`;
+            document.getElementById('payment-note').textContent = paymentNote;
+
+            // Venmo link
+            const venmoLink = generateVenmoLink(order.total, paymentNote);
+            document.getElementById('venmo-link').href = venmoLink;
+
+            // Generate QR code
+            generateQRCode(CONFIG.VENMO_USERNAME, order.total, paymentNote);
+        }
+
+        function generateVenmoLink(amount, note) {
+            const encodedNote = encodeURIComponent(note);
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                return `venmo://paycharge?txn=pay&recipients=${CONFIG.VENMO_USERNAME}&amount=${amount}&note=${encodedNote}`;
+            }
+            return `https://venmo.com/${CONFIG.VENMO_USERNAME}?txn=pay&amount=${amount}&note=${encodedNote}`;
+        }
+
+        function generateQRCode(username, amount, note) {
+            const qrContainer = document.getElementById('qr-code');
+            const venmoUrl = `https://venmo.com/${username}?txn=pay&amount=${amount}&note=${encodeURIComponent(note)}`;
+
+            // Using a simple QR code API
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(venmoUrl)}`;
+
+            qrContainer.innerHTML = `
+                <img src="${qrApiUrl}" alt="Venmo QR Code" class="qr-image"
+                     onerror="this.parentElement.innerHTML='<p class=\\'qr-fallback\\'>QR code unavailable.<br>Use the button above to pay.</p>'">
+            `;
+        }
+
+        function copyPaymentNote() {
+            const note = document.getElementById('payment-note').textContent;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(note).then(() => {
+                    showToast('Note copied to clipboard!');
+                }).catch(() => {
+                    fallbackCopy(note);
+                });
+            } else {
+                fallbackCopy(note);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+
+            try {
+                document.execCommand('copy');
+                showToast('Note copied!');
+            } catch (e) {
+                showToast('Please copy manually');
+            }
+
+            document.body.removeChild(textarea);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+    </script>
+</body>
+</html>

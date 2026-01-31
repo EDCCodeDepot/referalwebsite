@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Review your Girl Scout Cookie order and checkout.">
+    <title>Your Cart | Girl Scout Cookies</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍪</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="back-link">← Back to Cookies</a>
+                <div class="logo">
+                    <span class="logo-icon">🍪</span>
+                    <span class="logo-text">Your Cart</span>
+                </div>
+                <div class="header-spacer"></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="cart-page">
+        <div class="container">
+            <!-- Empty Cart State -->
+            <div class="empty-cart" id="empty-cart" style="display: none;">
+                <div class="empty-cart-icon">🛒</div>
+                <h2>Your cart is empty</h2>
+                <p>Add some delicious cookies to get started!</p>
+                <a href="index.html" class="btn btn-primary">Browse Cookies</a>
+            </div>
+
+            <!-- Cart Content -->
+            <div class="cart-content" id="cart-content">
+                <!-- Cart Items Section -->
+                <section class="cart-items-section">
+                    <h2>Order Summary</h2>
+                    <div class="cart-items" id="cart-items">
+                        <!-- Cart items will be dynamically loaded -->
+                    </div>
+                    <div class="cart-total-row">
+                        <span>Total:</span>
+                        <span class="cart-total">$<span id="cart-total">0</span></span>
+                    </div>
+                </section>
+
+                <!-- Checkout Form Section -->
+                <section class="checkout-section">
+                    <h2>Your Information</h2>
+                    <form id="checkout-form" class="checkout-form">
+                        <div class="form-group">
+                            <label for="customer-name">Full Name *</label>
+                            <input type="text" id="customer-name" name="customerName" required
+                                   placeholder="Enter your full name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required
+                                   placeholder="your@email.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required
+                                   placeholder="(555) 123-4567">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Delivery Method *</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="deliveryMethod" value="pickup" checked>
+                                    <span class="radio-custom"></span>
+                                    <span class="radio-text">
+                                        <strong>Pickup</strong>
+                                        <small>I'll pick up my order</small>
+                                    </span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="deliveryMethod" value="delivery">
+                                    <span class="radio-custom"></span>
+                                    <span class="radio-text">
+                                        <strong>Delivery</strong>
+                                        <small>Please deliver to my address</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="address-group" style="display: none;">
+                            <label for="address">Delivery Address *</label>
+                            <textarea id="address" name="address" rows="3"
+                                      placeholder="Street address, City, State, ZIP"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notes">Special Instructions (optional)</label>
+                            <textarea id="notes" name="notes" rows="2"
+                                      placeholder="Any special requests or instructions?"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-large" id="place-order-btn">
+                                Place Order
+                            </button>
+                        </div>
+
+                        <p class="form-note">
+                            * Required fields. Your information will only be used to process your order.
+                        </p>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Questions? Contact us at <a href="mailto:parent@email.com" id="contact-email">parent@email.com</a></p>
+            <p class="footer-note">Thank you for supporting Girl Scouts!</p>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Submitting your order...</p>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/cookies.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/checkout.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update contact email
+            document.getElementById('contact-email').textContent = CONFIG.CONTACT_EMAIL;
+            document.getElementById('contact-email').href = 'mailto:' + CONFIG.CONTACT_EMAIL;
+
+            // Render cart
+            renderCartPage();
+
+            // Setup delivery method toggle
+            setupDeliveryToggle();
+
+            // Setup form submission
+            setupCheckoutForm();
+        });
+
+        function renderCartPage() {
+            const cart = getCart();
+            const emptyCart = document.getElementById('empty-cart');
+            const cartContent = document.getElementById('cart-content');
+
+            if (cart.length === 0) {
+                emptyCart.style.display = 'flex';
+                cartContent.style.display = 'none';
+                return;
+            }
+
+            emptyCart.style.display = 'none';
+            cartContent.style.display = 'grid';
+
+            renderCartItems();
+            updateCartTotal();
+        }
+
+        function renderCartItems() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cart = getCart();
+
+            cartItemsContainer.innerHTML = cart.map(item => {
+                const cookie = getCookieById(item.cookieId);
+                if (!cookie) return '';
+
+                const subtotal = item.quantity * CONFIG.PRICE_PER_BOX;
+
+                return `
+                    <div class="cart-item" data-id="${item.cookieId}">
+                        <div class="cart-item-image">
+                            <div class="cookie-placeholder-small" style="background-color: ${cookie.color}">
+                                ${cookie.image
+                                    ? `<img src="${cookie.image}" alt="${cookie.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                       <span style="display:none;">${cookie.emoji}</span>`
+                                    : `<span>${cookie.emoji}</span>`
+                                }
+                            </div>
+                        </div>
+                        <div class="cart-item-details">
+                            <h3 class="cart-item-name">${cookie.name}</h3>
+                            <p class="cart-item-price">$${CONFIG.PRICE_PER_BOX} per box</p>
+                        </div>
+                        <div class="cart-item-quantity">
+                            <button class="qty-btn qty-minus" onclick="changeCartQuantity('${item.cookieId}', -1)">−</button>
+                            <span class="qty-value">${item.quantity}</span>
+                            <button class="qty-btn qty-plus" onclick="changeCartQuantity('${item.cookieId}', 1)">+</button>
+                        </div>
+                        <div class="cart-item-subtotal">
+                            $${subtotal}
+                        </div>
+                        <button class="cart-item-remove" onclick="removeCartItem('${item.cookieId}')" title="Remove item">
+                            ✕
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function changeCartQuantity(cookieId, delta) {
+            const cartItem = getCartItem(cookieId);
+            if (!cartItem) return;
+
+            const newQty = cartItem.quantity + delta;
+
+            if (newQty <= 0) {
+                removeFromCart(cookieId);
+            } else {
+                updateCartItemQuantity(cookieId, newQty);
+            }
+
+            renderCartPage();
+        }
+
+        function removeCartItem(cookieId) {
+            removeFromCart(cookieId);
+            renderCartPage();
+        }
+
+        function updateCartTotal() {
+            const cart = getCart();
+            const total = cart.reduce((sum, item) => sum + (item.quantity * CONFIG.PRICE_PER_BOX), 0);
+            document.getElementById('cart-total').textContent = total;
+        }
+
+        function setupDeliveryToggle() {
+            const radios = document.querySelectorAll('input[name="deliveryMethod"]');
+            const addressGroup = document.getElementById('address-group');
+            const addressInput = document.getElementById('address');
+
+            radios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'delivery') {
+                        addressGroup.style.display = 'block';
+                        addressInput.required = true;
+                    } else {
+                        addressGroup.style.display = 'none';
+                        addressInput.required = false;
+                    }
+                });
+            });
+        }
+
+        function setupCheckoutForm() {
+            const form = document.getElementById('checkout-form');
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const cart = getCart();
+                if (cart.length === 0) {
+                    alert('Your cart is empty!');
+                    return;
+                }
+
+                // Gather form data
+                const formData = {
+                    customerName: document.getElementById('customer-name').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    phone: document.getElementById('phone').value.trim(),
+                    deliveryMethod: document.querySelector('input[name="deliveryMethod"]:checked').value,
+                    address: document.getElementById('address').value.trim(),
+                    notes: document.getElementById('notes').value.trim()
+                };
+
+                // Validate
+                if (!formData.customerName || !formData.email || !formData.phone) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+
+                if (formData.deliveryMethod === 'delivery' && !formData.address) {
+                    alert('Please enter your delivery address.');
+                    return;
+                }
+
+                // Prepare order data
+                const orderData = {
+                    ...formData,
+                    items: formatCartItems(cart),
+                    total: calculateTotal(cart)
+                };
+
+                // Show loading
+                document.getElementById('loading-overlay').style.display = 'flex';
+
+                try {
+                    // Submit order
+                    const result = await submitOrder(orderData);
+
+                    // Store order info for confirmation page
+                    sessionStorage.setItem('lastOrder', JSON.stringify({
+                        ...orderData,
+                        orderId: result.orderId || generateLocalOrderId(),
+                        timestamp: new Date().toISOString()
+                    }));
+
+                    // Clear cart
+                    clearCart();
+
+                    // Redirect to confirmation
+                    window.location.href = 'confirmation.html';
+
+                } catch (error) {
+                    console.error('Order submission error:', error);
+
+                    // Still proceed - save order locally
+                    sessionStorage.setItem('lastOrder', JSON.stringify({
+                        ...orderData,
+                        orderId: generateLocalOrderId(),
+                        timestamp: new Date().toISOString(),
+                        submissionError: true
+                    }));
+
+                    clearCart();
+                    window.location.href = 'confirmation.html';
+
+                } finally {
+                    document.getElementById('loading-overlay').style.display = 'none';
+                }
+            });
+        }
+
+        function formatCartItems(cart) {
+            return cart.map(item => {
+                const cookie = getCookieById(item.cookieId);
+                return `${cookie.name} x${item.quantity}`;
+            }).join(', ');
+        }
+
+        function calculateTotal(cart) {
+            return cart.reduce((sum, item) => sum + (item.quantity * CONFIG.PRICE_PER_BOX), 0);
+        }
+
+        function generateLocalOrderId() {
+            return 'GS-' + Date.now().toString(36).toUpperCase();
+        }
+    </script>
+</body>
+</html>

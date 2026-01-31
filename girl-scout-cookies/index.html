@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Order delicious Girl Scout Cookies online! Support our local troop with your purchase.">
+    <title>Girl Scout Cookies | Order Online</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍪</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🍪</span>
+                    <span class="logo-text">Girl Scout Cookies</span>
+                </div>
+                <button class="cart-btn" id="header-cart-btn" onclick="window.location.href='cart.html'">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count" id="header-cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Help <span id="seller-name">Emma</span> Reach Her Cookie Goal!</h1>
+            <p class="hero-subtitle">Troop <span id="troop-number">45678</span> | <span id="council-name">Girl Scouts of Northeast Texas</span></p>
+            <p class="hero-text">Support our local Girl Scout by ordering delicious cookies. All proceeds help fund troop activities and community service projects!</p>
+            <p class="price-badge">All cookies just <strong>$10/box</strong></p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filters">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Cookies</button>
+                <button class="filter-btn" data-filter="vegan">
+                    <span class="badge badge-vegan">🌱</span> Vegan
+                </button>
+                <button class="filter-btn" data-filter="gluten-free">
+                    <span class="badge badge-gf">GF</span> Gluten-Free
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cookie Catalog -->
+    <main class="catalog">
+        <div class="container">
+            <div class="cookie-grid" id="cookie-grid">
+                <!-- Cookies will be dynamically loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Sticky Cart Summary -->
+    <div class="sticky-cart" id="sticky-cart">
+        <div class="container">
+            <div class="sticky-cart-content">
+                <div class="sticky-cart-info">
+                    <span class="sticky-cart-count"><span id="sticky-count">0</span> boxes</span>
+                    <span class="sticky-cart-total">$<span id="sticky-total">0</span></span>
+                </div>
+                <a href="cart.html" class="btn btn-primary sticky-cart-btn">
+                    View Cart →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Questions? Contact us at <a href="mailto:parent@email.com" id="contact-email">parent@email.com</a></p>
+            <p class="footer-note">Thank you for supporting Girl Scouts!</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-message" id="toast-message">Added to cart!</span>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/cookies.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update seller info from config
+            document.getElementById('seller-name').textContent = CONFIG.SELLER_NAME;
+            document.getElementById('troop-number').textContent = CONFIG.TROOP_NUMBER;
+            document.getElementById('council-name').textContent = CONFIG.COUNCIL_NAME;
+            document.getElementById('contact-email').textContent = CONFIG.CONTACT_EMAIL;
+            document.getElementById('contact-email').href = 'mailto:' + CONFIG.CONTACT_EMAIL;
+
+            // Render cookies
+            renderCookies();
+
+            // Update cart display
+            updateCartDisplay();
+
+            // Setup filter buttons
+            setupFilters();
+        });
+
+        function renderCookies(filter = 'all') {
+            const grid = document.getElementById('cookie-grid');
+            grid.innerHTML = '';
+
+            const filteredCookies = filter === 'all'
+                ? COOKIES
+                : COOKIES.filter(cookie => {
+                    if (filter === 'vegan') return cookie.vegan;
+                    if (filter === 'gluten-free') return cookie.glutenFree;
+                    return true;
+                });
+
+            filteredCookies.forEach(cookie => {
+                const card = createCookieCard(cookie);
+                grid.appendChild(card);
+            });
+        }
+
+        function createCookieCard(cookie) {
+            const card = document.createElement('div');
+            card.className = 'cookie-card';
+            card.dataset.id = cookie.id;
+
+            const badges = [];
+            if (cookie.vegan) badges.push('<span class="badge badge-vegan">🌱 Vegan</span>');
+            if (cookie.glutenFree) badges.push('<span class="badge badge-gf">GF</span>');
+            if (cookie.isNew) badges.push('<span class="badge badge-new">NEW!</span>');
+
+            const cartItem = getCartItem(cookie.id);
+            const quantity = cartItem ? cartItem.quantity : 0;
+
+            card.innerHTML = `
+                <div class="cookie-image">
+                    <div class="cookie-placeholder" style="background-color: ${cookie.color}">
+                        <span class="cookie-emoji">${cookie.emoji}</span>
+                    </div>
+                    ${badges.length > 0 ? '<div class="cookie-badges">' + badges.join('') + '</div>' : ''}
+                </div>
+                <div class="cookie-info">
+                    <h3 class="cookie-name">${cookie.name}</h3>
+                    ${cookie.altName ? '<p class="cookie-alt-name">' + cookie.altName + '</p>' : ''}
+                    <p class="cookie-description">${cookie.description}</p>
+                    <p class="cookie-price">$${CONFIG.PRICE_PER_BOX} per box</p>
+                </div>
+                <div class="cookie-actions">
+                    <div class="quantity-selector ${quantity > 0 ? 'has-quantity' : ''}">
+                        <button class="qty-btn qty-minus" onclick="updateQuantity('${cookie.id}', -1)" ${quantity === 0 ? 'disabled' : ''}>−</button>
+                        <span class="qty-value">${quantity}</span>
+                        <button class="qty-btn qty-plus" onclick="updateQuantity('${cookie.id}', 1)">+</button>
+                    </div>
+                    <button class="btn btn-add ${quantity > 0 ? 'btn-added' : ''}" onclick="quickAdd('${cookie.id}')">
+                        ${quantity > 0 ? '✓ In Cart' : 'Add to Cart'}
+                    </button>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function quickAdd(cookieId) {
+            const cartItem = getCartItem(cookieId);
+            if (!cartItem) {
+                addToCart(cookieId, 1);
+                showToast('Added to cart!');
+            }
+            renderCookies(getCurrentFilter());
+            updateCartDisplay();
+        }
+
+        function updateQuantity(cookieId, delta) {
+            const cartItem = getCartItem(cookieId);
+            const currentQty = cartItem ? cartItem.quantity : 0;
+            const newQty = Math.max(0, currentQty + delta);
+
+            if (newQty === 0) {
+                removeFromCart(cookieId);
+            } else if (cartItem) {
+                updateCartItemQuantity(cookieId, newQty);
+            } else {
+                addToCart(cookieId, newQty);
+            }
+
+            if (delta > 0) {
+                showToast('Added to cart!');
+            }
+
+            renderCookies(getCurrentFilter());
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const cart = getCart();
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.quantity * CONFIG.PRICE_PER_BOX), 0);
+
+            document.getElementById('header-cart-count').textContent = totalItems;
+            document.getElementById('sticky-count').textContent = totalItems;
+            document.getElementById('sticky-total').textContent = totalPrice;
+
+            const stickyCart = document.getElementById('sticky-cart');
+            if (totalItems > 0) {
+                stickyCart.classList.add('visible');
+            } else {
+                stickyCart.classList.remove('visible');
+            }
+        }
+
+        function setupFilters() {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    buttons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    renderCookies(this.dataset.filter);
+                });
+            });
+        }
+
+        function getCurrentFilter() {
+            const activeBtn = document.querySelector('.filter-btn.active');
+            return activeBtn ? activeBtn.dataset.filter : 'all';
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+    </script>
+</body>
+</html>

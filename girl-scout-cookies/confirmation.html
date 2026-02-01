@@ -89,37 +89,42 @@
                 <!-- Payment Section -->
                 <section class="payment-section">
                     <h2>Complete Your Payment</h2>
-                    <div class="payment-box">
-                        <div class="venmo-info">
-                            <img src="https://cdn.worldvectorlogo.com/logos/venmo.svg" alt="Venmo" class="venmo-logo"
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <span class="venmo-text-fallback" style="display: none; font-weight: bold; color: #3D95CE; font-size: 24px;">Venmo</span>
-                        </div>
 
-                        <div class="payment-details">
-                            <p class="venmo-username">Send payment to: <strong>@<span id="venmo-username">username</span></strong></p>
-                            <p class="payment-amount">Amount: <strong>$<span id="payment-amount">0</span></strong></p>
-                        </div>
+                    <div class="payment-amount-display">
+                        <p>Amount Due: <strong class="payment-total">$<span id="payment-amount">0</span></strong></p>
+                    </div>
 
-                        <a href="#" id="venmo-link" class="btn btn-venmo btn-large">
+                    <div class="payment-buttons">
+                        <a href="#" id="venmo-link" class="btn btn-venmo btn-large payment-btn">
+                            <span class="payment-btn-icon">V</span>
                             Pay with Venmo
                         </a>
+                        <a href="#" id="paypal-link" class="btn btn-paypal btn-large payment-btn">
+                            <span class="payment-btn-icon">P</span>
+                            Pay with PayPal
+                        </a>
+                    </div>
+
+                    <div class="payment-box">
+                        <div class="payment-details-grid">
+                            <div class="payment-option">
+                                <div class="payment-option-header">Venmo</div>
+                                <p class="payment-username">@<span id="venmo-username">username</span></p>
+                            </div>
+                            <div class="payment-option">
+                                <div class="payment-option-header">PayPal</div>
+                                <p class="payment-username">paypal.me/<span id="paypal-username">username</span></p>
+                            </div>
+                        </div>
 
                         <div class="payment-instructions">
-                            <p><strong>Important:</strong> Please include the following in your payment note:</p>
+                            <p><strong>Important:</strong> Please include this note with your payment:</p>
                             <div class="payment-note" id="payment-note">
                                 Cookie Order - [Your Name]
                             </div>
                             <button class="btn btn-secondary btn-small" onclick="copyPaymentNote()">
                                 Copy Note
                             </button>
-                        </div>
-
-                        <div class="qr-code-section">
-                            <p>Or scan this QR code to pay:</p>
-                            <div class="qr-code" id="qr-code">
-                                <!-- QR code will be generated here -->
-                            </div>
                         </div>
                     </div>
 
@@ -166,6 +171,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Update config-based elements
             document.getElementById('venmo-username').textContent = CONFIG.VENMO_USERNAME;
+            document.getElementById('paypal-username').textContent = CONFIG.PAYPAL_USERNAME;
             document.getElementById('contact-email').textContent = CONFIG.CONTACT_EMAIL;
             document.getElementById('contact-email').href = 'mailto:' + CONFIG.CONTACT_EMAIL;
 
@@ -224,8 +230,9 @@
             const venmoLink = generateVenmoLink(order.total, paymentNote);
             document.getElementById('venmo-link').href = venmoLink;
 
-            // Generate QR code
-            generateQRCode(CONFIG.VENMO_USERNAME, order.total, paymentNote);
+            // PayPal link
+            const paypalLink = generatePayPalLink(order.total, paymentNote);
+            document.getElementById('paypal-link').href = paypalLink;
         }
 
         function generateVenmoLink(amount, note) {
@@ -238,17 +245,9 @@
             return `https://venmo.com/${CONFIG.VENMO_USERNAME}?txn=pay&amount=${amount}&note=${encodedNote}`;
         }
 
-        function generateQRCode(username, amount, note) {
-            const qrContainer = document.getElementById('qr-code');
-            const venmoUrl = `https://venmo.com/${username}?txn=pay&amount=${amount}&note=${encodeURIComponent(note)}`;
-
-            // Using a simple QR code API
-            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(venmoUrl)}`;
-
-            qrContainer.innerHTML = `
-                <img src="${qrApiUrl}" alt="Venmo QR Code" class="qr-image"
-                     onerror="this.parentElement.innerHTML='<p class=\\'qr-fallback\\'>QR code unavailable.<br>Use the button above to pay.</p>'">
-            `;
+        function generatePayPalLink(amount, note) {
+            const encodedNote = encodeURIComponent(note);
+            return `https://paypal.me/${CONFIG.PAYPAL_USERNAME}/${amount}USD`;
         }
 
         function copyPaymentNote() {

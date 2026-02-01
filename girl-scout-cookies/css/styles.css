@@ -210,13 +210,25 @@ input, textarea, select {
 }
 
 .btn-venmo {
-    background: var(--color-venmo);
+    background: #008CFF;
     color: white;
     box-shadow: 0 4px 15px rgba(0, 140, 255, 0.25);
 }
 
 .btn-venmo:hover {
-    background: var(--color-venmo-dark);
+    background: #0070CC;
+    transform: translateY(-1px);
+    color: white;
+}
+
+.btn-paypal {
+    background: #003087;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 48, 135, 0.25);
+}
+
+.btn-paypal:hover {
+    background: #001F5C;
     transform: translateY(-1px);
     color: white;
 }
@@ -1163,14 +1175,74 @@ input, textarea, select {
 }
 
 /* ============================================
-   Payment Section - Venmo Focus
+   Payment Section
    ============================================ */
+.payment-amount-display {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.payment-amount-display p {
+    font-size: 1.125rem;
+    color: var(--color-warm-gray);
+}
+
+.payment-total {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--color-espresso);
+}
+
+.payment-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.payment-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+.payment-btn-icon {
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
 .payment-box {
     text-align: center;
     padding: var(--spacing-xl);
     background: var(--color-linen);
     border-radius: var(--radius-lg);
     border: 1px dashed var(--color-oat);
+}
+
+.payment-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.payment-option {
+    text-align: center;
+}
+
+.payment-option-header {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: var(--color-espresso);
+    margin-bottom: var(--spacing-xs);
+}
+
+.payment-username {
+    font-size: 0.875rem;
+    color: var(--color-warm-gray);
+    word-break: break-all;
 }
 
 .venmo-info {
@@ -1461,6 +1533,10 @@ input, textarea, select {
 
     .radio-label {
         flex: 1;
+    }
+
+    .payment-buttons {
+        flex-direction: row;
     }
 }
 

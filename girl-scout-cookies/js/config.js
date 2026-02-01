@@ -7,10 +7,13 @@
 
 const CONFIG = {
     // ----------------------------------------
-    // VENMO SETTINGS
+    // PAYMENT SETTINGS
     // ----------------------------------------
     // Your Venmo username (without the @)
     VENMO_USERNAME: 'evan-decorte',
+
+    // Your PayPal.me username
+    PAYPAL_USERNAME: 'evandecorte',
 
     // ----------------------------------------
     // GOOGLE SHEETS INTEGRATION
